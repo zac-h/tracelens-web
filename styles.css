@@ -161,10 +161,10 @@ button, input { font: inherit; }
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: -18px;
-  width: 46px;
-  min-height: 36px;
-  padding: 0 0 5px;
+  top: -24px;
+  width: 52px;
+  min-height: 48px;
+  padding: 0 0 7px;
   transform: translateX(-50%);
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -173,13 +173,14 @@ button, input { font: inherit; }
   box-shadow: 0 5px 18px rgba(0,0,0,.3);
   font-size: 23px;
   line-height: 1;
+  touch-action: manipulation;
 }
 
 .controls.collapsed {
   left: 50%;
   right: auto;
-  width: 50px;
-  height: 42px;
+  width: 52px;
+  height: 48px;
   padding: 0;
   transform: translateX(-50%);
   border-radius: 999px;
@@ -192,8 +193,8 @@ button, input { font: inherit; }
 
 .controls.collapsed .collapse-button {
   top: 0;
-  width: 48px;
-  min-height: 40px;
+  width: 50px;
+  min-height: 46px;
   padding: 4px 0 0;
   background: transparent;
   border: 0;
@@ -229,6 +230,7 @@ button, .primary-button {
   padding: 0 15px;
   font-weight: 680;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .primary-button { background: var(--cream); color: var(--ink); }
@@ -236,7 +238,7 @@ button, .primary-button {
 .secondary { min-height: 40px; background: rgba(255,255,255,.09); color: white; font-size: 13px; }
 .lock-button.active { background: var(--accent); color: #21170e; }
 .danger { color: #ffaaa3; }
-button:active, .primary-button:active { transform: scale(.98); }
+button:not(.collapse-button):active, .primary-button:active { transform: scale(.98); }
 
 #imagePicker { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .hint { margin: 10px 0 0; color: rgba(255,255,255,.48); text-align: center; font-size: 11px; }
@@ -261,7 +263,7 @@ button:active, .primary-button:active { transform: scale(.98); }
 
 @media (orientation: landscape) and (max-height: 520px) {
   .controls { left: auto; width: min(390px, 46vw); }
-  .controls.collapsed { left: auto; right: 12px; width: 50px; transform: none; }
+  .controls.collapsed { left: auto; right: 12px; width: 52px; transform: none; }
   .welcome { left: 27%; top: 48%; }
   #overlay { max-height: 78vh; }
 }
