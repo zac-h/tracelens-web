@@ -7,6 +7,9 @@ const opacity = document.querySelector('#opacity');
 const opacityValue = document.querySelector('#opacityValue');
 const opacityRow = document.querySelector('#opacityRow');
 const imageActions = document.querySelector('#imageActions');
+const controls = document.querySelector('#controls');
+const collapseButton = document.querySelector('#collapseButton');
+const lockButton = document.querySelector('#lockButton');
 const resetButton = document.querySelector('#resetButton');
 const removeButton = document.querySelector('#removeButton');
 const pickerLabel = document.querySelector('#pickerLabel');
@@ -19,6 +22,7 @@ let imageURL = null;
 let x = 0;
 let y = 0;
 let scale = 1;
+let imageLocked = false;
 const pointers = new Map();
 let gestureStart = null;
 let noticeTimer = null;
@@ -80,6 +84,24 @@ function resetTransform() {
   renderTransform();
 }
 
+function setImageLocked(locked) {
+  imageLocked = locked;
+  pointers.clear();
+  gestureStart = null;
+  overlay.classList.toggle('locked', locked);
+  overlay.style.pointerEvents = locked ? 'none' : 'auto';
+  lockButton.classList.toggle('active', locked);
+  lockButton.setAttribute('aria-pressed', String(locked));
+  lockButton.textContent = locked ? '◆ Locked' : '◇ Lock';
+}
+
+function setControlsCollapsed(collapsed) {
+  controls.classList.toggle('collapsed', collapsed);
+  collapseButton.textContent = collapsed ? '⌃' : '⌄';
+  collapseButton.setAttribute('aria-label', collapsed ? 'Show controls' : 'Hide controls');
+  collapseButton.setAttribute('aria-expanded', String(!collapsed));
+}
+
 function removeImage() {
   overlay.hidden = true;
   overlay.removeAttribute('src');
@@ -90,6 +112,7 @@ function removeImage() {
   imageActions.hidden = true;
   welcome.hidden = false;
   pickerLabel.textContent = 'Choose picture';
+  setImageLocked(false);
   resetTransform();
 }
 
@@ -108,6 +131,7 @@ function pointerCenter() {
 }
 
 overlay.addEventListener('pointerdown', event => {
+  if (imageLocked) return;
   event.preventDefault();
   overlay.setPointerCapture(event.pointerId);
   pointers.set(event.pointerId, event);
@@ -123,6 +147,7 @@ overlay.addEventListener('pointerdown', event => {
 });
 
 overlay.addEventListener('pointermove', event => {
+  if (imageLocked) return;
   if (!pointers.has(event.pointerId) || !gestureStart) return;
   event.preventDefault();
   pointers.set(event.pointerId, event);
@@ -149,6 +174,8 @@ overlay.addEventListener('pointerup', finishPointer);
 overlay.addEventListener('pointercancel', finishPointer);
 
 cameraButton.addEventListener('click', startCamera);
+collapseButton.addEventListener('click', () => setControlsCollapsed(!controls.classList.contains('collapsed')));
+lockButton.addEventListener('click', () => setImageLocked(!imageLocked));
 resetButton.addEventListener('click', resetTransform);
 removeButton.addEventListener('click', removeImage);
 
@@ -175,6 +202,7 @@ imagePicker.addEventListener('change', async () => {
   opacityRow.hidden = false;
   imageActions.hidden = false;
   pickerLabel.textContent = 'Change picture';
+  setImageLocked(false);
   resetTransform();
   await requestWakeLock();
 });

@@ -33,26 +33,30 @@
       <div class="status" id="awakeStatus"><span></span> Screen awake</div>
     </div>
 
-    <section class="controls" aria-label="Tracing controls">
-      <div class="opacity-row" id="opacityRow" hidden>
-        <label for="opacity">Opacity</label>
-        <input id="opacity" type="range" min="5" max="100" value="55">
-        <output id="opacityValue" for="opacity">55%</output>
-      </div>
+    <section class="controls" id="controls" aria-label="Tracing controls">
+      <button class="collapse-button" id="collapseButton" type="button" aria-label="Hide controls" aria-expanded="true">⌄</button>
+      <div class="controls-body">
+        <div class="opacity-row" id="opacityRow" hidden>
+          <label for="opacity">Opacity</label>
+          <input id="opacity" type="range" min="5" max="100" value="55">
+          <output id="opacityValue" for="opacity">55%</output>
+        </div>
 
-      <div class="action-row" id="imageActions" hidden>
-        <button class="secondary" id="resetButton" type="button">Reset position</button>
-        <button class="secondary danger" id="removeButton" type="button">Remove</button>
-      </div>
+        <div class="action-row" id="imageActions" hidden>
+          <button class="secondary lock-button" id="lockButton" type="button" aria-pressed="false">◇ Lock</button>
+          <button class="secondary" id="resetButton" type="button">Reset</button>
+          <button class="secondary danger" id="removeButton" type="button">Remove</button>
+        </div>
 
-      <div class="picker-row">
-        <button class="camera-button" id="cameraButton" type="button">Start camera</button>
-        <label class="primary-button" for="imagePicker">
-          <span id="pickerLabel">Choose picture</span>
-          <input id="imagePicker" type="file" accept="image/*">
-        </label>
+        <div class="picker-row">
+          <button class="camera-button" id="cameraButton" type="button">Start camera</button>
+          <label class="primary-button" for="imagePicker">
+            <span id="pickerLabel">Choose picture</span>
+            <input id="imagePicker" type="file" accept="image/*">
+          </label>
+        </div>
+        <p class="hint" id="hint">Your picture stays on this device.</p>
       </div>
-      <p class="hint" id="hint">Your picture stays on this device.</p>
     </section>
 
     <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
